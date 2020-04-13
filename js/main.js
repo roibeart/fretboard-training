@@ -20,6 +20,16 @@ var getFormData = function($form) {
     return indexed_array;
 }
 
+var StepsCounter = {
+    count: 0,
+    incrementCounter: function(){
+        this.count++;
+    },
+    resetCounter: function(){
+        this.count = 0;
+    }
+}
+
 var showSettingsView = function (){
     $("#training-view").hide();
     $("#settings-view").css({'display': 'flex'});
@@ -27,7 +37,9 @@ var showSettingsView = function (){
 
 var showExerciseView = function (options) {
     $("#settings-view").hide();
+    StepsCounter.incrementCounter();
     var exercise = getExercise(options);
+    $(".counter-text").html("Esercizio "+StepsCounter.count);
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
@@ -35,6 +47,12 @@ var showExerciseView = function (options) {
 
 $(function(){
     showSettingsView();
+
+    $('#bpmInput').on('input change', function(){
+        var bpmValue = ($(this).val() == 0) ? "Off" : $(this).val()+" bpm";
+        $('label[for=bpmInput]').html(bpmValue);
+    });
+    $('#bpmInput').trigger("change");
 
     $('#settings-form').on('submit', function(event){
         event.preventDefault();
@@ -46,12 +64,24 @@ $(function(){
     });
 
     var initTraining = function(options){
+
         showExerciseView(options);
-        $("#training-view .next-button").click(function(){
-            showExerciseView(options);
-        });
+        
+        var timer;
+        if (options.bpm != 0){
+            var milliseconds = (60 / options.bpm) * 1000;
+            timer = setInterval(function(){showExerciseView(options)}, milliseconds);
+            $("#training-view .next-button").hide();
+        } else {
+            $("#training-view .next-button").show().click(function () {
+                showExerciseView(options);
+            });
+        }
+
         $("#training-view .stop-button").click(function () {
+            clearInterval(timer);
             showSettingsView();
+            StepsCounter.resetCounter();
         });
     }
 
