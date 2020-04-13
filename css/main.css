@@ -1,0 +1,55 @@
+h2 {
+    font-size: 1.5rem;
+}
+
+.form-check:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+.view {
+    display: none;
+    height: 100vh;
+    overflow: auto;
+}
+
+.view .view-wrapper {
+    max-width: 23.0rem;
+    text-align: center;
+    margin: auto;
+}
+
+#settings-view .view-wrapper {
+    text-align: left;
+}
+
+.buttons-wrapper {
+    text-align: center;
+}
+
+#training-view {
+    font-size: 1.5rem;
+}
+
+#training-view .note-text, #training-view .string-text {
+    font-size: 2rem;
+    font-style: bold;
+}
+
+#training-view .exercise-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+#training-view .between-text {
+    padding: 20px 0;
+}
+
+#training-view .buttons-wrapper {
+    margin-top: 4rem;
+}
+
+#training-view .stop-button {
+    display: block;
+    margin-top: 1.5rem;
+    text-decoration: underline;
+    font-size: 0.8rem;
+}

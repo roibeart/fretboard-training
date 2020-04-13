@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Fretboard Training</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/main.css" />
+</head>
+<body>
+    <div class="container-fluid">
+
+        <div class="view row align-items-center" id="settings-view">
+            <div class="view-wrapper">
+                <form id="settings-form">
+                    <div class="form-group">
+                        <h2>Corde</h2>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="first-string-check" name="strings[]" value="1">
+                            <label class="form-check-label" for="first-string-check">Corda 1 (MI alto | high E)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="second-string-check" name="strings[]" value="2">
+                            <label class="form-check-label" for="second-string-check">Corda 2 (SI | B)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="third-string-check" name="strings[]" value="3">
+                            <label class="form-check-label" for="third-string-check">Corda 3 (SOL | G)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="fourth-string-check" name="strings[]" value="4">
+                            <label class="form-check-label" for="fourth-string-check">Corda 4 (RE | D)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="fifth-string-check" name="strings[]" value="5">
+                            <label class="form-check-label" for="fifth-string-check">Corda 5 (LA | A)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sixth-string-check" name="strings[]" value="6">
+                            <label class="form-check-label" for="sixth-string-check">Corda 6 (MI basso | low E)</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h2>Altro</h2>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="include-accidentals" name="accidentals_included"
+                                value="1">
+                            <label class="form-check-label" for="include-accidentals">Includi accidentali (♯ e ♭)</label>
+                        </div>
+                    </div>
+                    <div class="form-group buttons-wrapper">
+                        <button class="btn btn-primary text-uppercase">
+                            Start
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="view row align-items-center" id="training-view">
+            <div class="view-wrapper">
+                <div class="exercise-wrapper">
+                    <div class="note-text">
+                
+                    </div>
+                    <div class="between-text">
+                        sulla
+                    </div>
+                    <div class="string-text">
+                
+                    </div>
+                </div>
+                <div class="buttons-wrapper">
+                    <button class="next-button btn btn-primary text-uppercase">
+                        Next
+                    </button>
+                    <div>
+                        <a class="stop-button text-uppercase" href="#">Stop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="./js/functions.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
