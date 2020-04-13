@@ -1,9 +1,21 @@
-h2 {
-    font-size: 1.5rem;
+body {
+    font-size: 1.3rem;
 }
 
-.form-check:not(:last-child) {
-    margin-bottom: 0.5rem;
+h2 {
+    font-size: 2rem;
+}
+
+.form-group{
+    margin-bottom: 2rem;
+}
+
+.form-check {
+    margin-bottom: 1rem;
+}
+
+.form-check .form-check-input{
+    margin-top: 0.6rem;
 }
 
 .view {
@@ -27,16 +39,16 @@ h2 {
 }
 
 #training-view {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 #training-view .note-text, #training-view .string-text {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-style: bold;
 }
 
 #training-view .exercise-wrapper {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 #training-view .between-text {
@@ -44,12 +56,12 @@ h2 {
 }
 
 #training-view .buttons-wrapper {
-    margin-top: 4rem;
+    margin-top: 4.5rem;
 }
 
 #training-view .stop-button {
     display: block;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     text-decoration: underline;
     font-size: 0.8rem;
 }
