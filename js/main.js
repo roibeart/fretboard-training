@@ -39,8 +39,10 @@ $(function(){
     $('#settings-form').on('submit', function(event){
         event.preventDefault();
         var data = getFormData($(this));
-        selectedOptions = data;
-        initTraining(data);
+        if (data.strings){
+            selectedOptions = data;
+            initTraining(data);
+        }
     });
 
     var initTraining = function(options){
