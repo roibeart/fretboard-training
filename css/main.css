@@ -44,7 +44,7 @@ h2 {
 
 #training-view .note-text, #training-view .string-text {
     font-size: 2.5rem;
-    font-style: bold;
+    font-weight: bold;
 }
 
 #training-view .exercise-wrapper {
