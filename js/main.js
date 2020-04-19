@@ -43,6 +43,9 @@ var showExerciseView = function (options) {
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
+    if (options['enable-vibration']){
+        window.navigator.vibrate(200);
+    }
 }
 
 var noSleep = new NoSleep();
@@ -54,7 +57,11 @@ $(function(){
         var label;
         if ($(this).val() == 0){
             label = "Off <span class='note'>sposta il pallino per attivare l'autoplay</span>";
+            $(".vibration-settings").hide();
+            $('#enable-vibration-check').prop("disabled", true);
         } else {
+            $(".vibration-settings").show();
+            $('#enable-vibration-check').prop("disabled", false);
             var seconds = (60 / $(this).val());
             // https://stackoverflow.com/a/11832950
             seconds = Math.round((seconds + Number.EPSILON) * 100) / 100;
