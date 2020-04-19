@@ -45,6 +45,8 @@ var showExerciseView = function (options) {
     $("#training-view").css({'display': 'flex'});
 }
 
+var noSleep = new NoSleep();
+
 $(function(){
     showSettingsView();
 
@@ -63,17 +65,17 @@ $(function(){
     });
     $('#bpmInput').trigger("change");
 
-    $('#settings-form').on('submit', function(event){
+    $('#settings-form .start-button').on('click tap', function(event){
         event.preventDefault();
-        var data = getFormData($(this));
+        var data = getFormData($('#settings-form'));
         if (data.strings){
             selectedOptions = data;
+            noSleep.enable();
             initTraining(data);
         }
     });
 
     var initTraining = function(options){
-
         var countUpTimer = new CountUpTimer(".timer-text .seconds", ".timer-text .minutes");
         countUpTimer.start();
 
@@ -95,6 +97,7 @@ $(function(){
             countUpTimer.stop();
             showSettingsView();
             StepsCounter.resetCounter();
+            noSleep.disable();
         });
     }
 

@@ -57,7 +57,6 @@ class CountUpTimer {
     constructor(secondsSelector, minutesSelector) {
         this.timer = null;
         this.secondsLabel = $(secondsSelector);
-        console.log(secondsSelector);
         this.minutesLabel = $(minutesSelector);
     }
 
@@ -75,7 +74,6 @@ class CountUpTimer {
                 }
             }
             totalSeconds = totalSeconds + 1;
-            console.log(secondsLabel.length);
             secondsLabel.html(pad(totalSeconds % 60));
             minutesLabel.html(pad(parseInt(totalSeconds / 60)));
             return totalSeconds;
