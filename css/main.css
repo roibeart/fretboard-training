@@ -36,7 +36,7 @@ h2 {
     text-align: left;
 }
 
-#settings-view label .note{
+#settings-view label .note {
     font-size: 1rem;
     color: #c0c0c0;
     display: block;
@@ -48,6 +48,11 @@ h2 {
 
 #training-view {
     font-size: 2rem;
+}
+
+#training-view .timer-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 #training-view .counter-text {

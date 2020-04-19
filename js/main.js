@@ -74,12 +74,15 @@ $(function(){
 
     var initTraining = function(options){
 
+        var countUpTimer = new CountUpTimer(".timer-text .seconds", ".timer-text .minutes");
+        countUpTimer.start();
+
         showExerciseView(options);
         
-        var timer;
+        var autoplayTimer;
         if (options.bpm != 0){
             var milliseconds = (60 / options.bpm) * 1000;
-            timer = setInterval(function(){showExerciseView(options)}, milliseconds);
+            autoplayTimer = setInterval(function(){showExerciseView(options)}, milliseconds);
             $("#training-view .next-button").hide();
         } else {
             $("#training-view .next-button").show().click(function () {
@@ -88,7 +91,8 @@ $(function(){
         }
 
         $("#training-view .stop-button").click(function () {
-            clearInterval(timer);
+            clearInterval(autoplayTimer);
+            countUpTimer.stop();
             showSettingsView();
             StepsCounter.resetCounter();
         });
