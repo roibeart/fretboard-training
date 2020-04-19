@@ -37,6 +37,12 @@ var getRandomElement = function(array){
 var getExercise = function(options){
     var note = getRandomElement(notes);
     note.accidental = (options.accidentals_included) ? getRandomElement(["", "♯", "♭"]) : "";
+    if (
+        (note.accidental == "♯" && (note.latin == "Si" || note.latin == "Mi"))
+        || (note.accidental == "♭" && (note.latin == "Do" || note.latin == "Fa"))
+    ){
+        note.accidental = "";
+    }
     var string = getRandomElement(options.strings);
 
     return {
