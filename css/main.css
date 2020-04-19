@@ -26,13 +26,20 @@ h2 {
 
 .view .view-wrapper {
     padding: 10px;
-    max-width: 23.0rem;
+    /* max-width: 23.0rem; */
+    width: 22.5rem;
     text-align: center;
     margin: auto;
 }
 
 #settings-view .view-wrapper {
     text-align: left;
+}
+
+#settings-view label .note{
+    font-size: 1rem;
+    color: #c0c0c0;
+    display: block;
 }
 
 .buttons-wrapper {

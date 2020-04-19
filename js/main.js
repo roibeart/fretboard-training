@@ -49,8 +49,17 @@ $(function(){
     showSettingsView();
 
     $('#bpmInput').on('input change', function(){
-        var bpmValue = ($(this).val() == 0) ? "Off" : $(this).val()+" bpm";
-        $('label[for=bpmInput]').html(bpmValue);
+        var label;
+        if ($(this).val() == 0){
+            label = "Off <span class='note'>sposta il pallino per attivare l'autoplay</span>";
+        } else {
+            var seconds = (60 / $(this).val());
+            // https://stackoverflow.com/a/11832950
+            seconds = Math.round((seconds + Number.EPSILON) * 100) / 100;
+            var secondsString = (seconds == 1) ? "secondo" : seconds + " secondi";
+            label = $(this).val() +" bpm <span class='note'>una nota ogni " + secondsString + "</span>";
+        }
+        $('label[for=bpmInput]').html(label);
     });
     $('#bpmInput').trigger("change");
 
