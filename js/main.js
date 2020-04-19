@@ -1,3 +1,19 @@
+var loadSettingsFormDefaults = function(){
+    var savedSettings = loadSavedSettings();
+    if (!$.isEmptyObject(savedSettings)) {
+        for (element in savedSettings.strings){
+            $('input[name="strings[]"][value="' + savedSettings.strings[element] + '"]').prop("checked", true);
+        }
+        if (savedSettings.accidentals_included){
+            $('input[name="accidentals_included"]').prop("checked", true);
+        }
+        if (savedSettings.bpm) {
+            $('input[name="bpm"]').val(savedSettings.bpm);
+            $('input[name="enable_vibration"]').prop("checked", (savedSettings.enable_vibration == "1" ));
+        }
+    }
+}
+
 // https://stackoverflow.com/a/11339012
 var getFormData = function($form) {
     var unindexed_array = $form.serializeArray();
@@ -43,7 +59,7 @@ var showExerciseView = function (options) {
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
-    if (options['enable-vibration']){
+    if (options['enable_vibration']){
         window.navigator.vibrate(200);
     }
 }
@@ -51,6 +67,9 @@ var showExerciseView = function (options) {
 var noSleep = new NoSleep();
 
 $(function(){
+
+    loadSettingsFormDefaults();
+
     showSettingsView();
 
     $('#bpmInput').on('input change', function(){
@@ -58,10 +77,10 @@ $(function(){
         if ($(this).val() == 0){
             label = "Off <span class='note'>sposta il pallino per attivare l'autoplay</span>";
             $(".vibration-settings").hide();
-            $('#enable-vibration-check').prop("disabled", true);
+            $('#enable_vibration-check').prop("disabled", true);
         } else {
             $(".vibration-settings").show();
-            $('#enable-vibration-check').prop("disabled", false);
+            $('#enable_vibration-check').prop("disabled", false);
             var seconds = (60 / $(this).val());
             // https://stackoverflow.com/a/11832950
             seconds = Math.round((seconds + Number.EPSILON) * 100) / 100;
@@ -77,6 +96,7 @@ $(function(){
         var data = getFormData($('#settings-form'));
         if (data.strings){
             selectedOptions = data;
+            saveSettings(data);
             noSleep.enable();
             initTraining(data);
         }

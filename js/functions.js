@@ -86,3 +86,16 @@ class CountUpTimer {
         this.minutesLabel.html("00");
     }
 };
+
+var saveSettings = function(settings){
+    localStorage.setItem("savedSettings", JSON.stringify(settings));
+}
+
+var loadSavedSettings = function(){
+    var savedSettings = null;
+    if (typeof (Storage) !== "undefined") {
+        savedSettings = JSON.parse(localStorage.getItem("savedSettings"));
+    }
+
+    return savedSettings;
+}
