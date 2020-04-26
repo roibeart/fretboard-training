@@ -140,12 +140,12 @@ $(function(){
             autoplayTimer = setInterval(function(){showExerciseView(options)}, milliseconds);
             $("#training-view .next-button").hide();
         } else {
-            $("#training-view .next-button").show().click(function () {
+            $("#training-view .next-button").show().off().click(function () {
                 showExerciseView(options);
             });
         }
 
-        $("#training-view .stop-button").click(function () {
+        $("#training-view .stop-button").off().click(function () {
             var totalTime = $('.timer-text').text();
             var totalExercises = StepsCounter.count;
             clearInterval(autoplayTimer);
@@ -155,7 +155,7 @@ $(function(){
             showSummaryView(totalTime, totalExercises);
         });
 
-        $("#summary-view .finish-button").click(function(){
+        $("#summary-view .finish-button").off().click(function(){
             showSettingsView();
         });
         
