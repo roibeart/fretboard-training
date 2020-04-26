@@ -10,6 +10,9 @@ if ("serviceWorker" in navigator) {
 var loadSettingsFormDefaults = function(){
     var savedSettings = loadSavedSettings();
     if (!$.isEmptyObject(savedSettings)) {
+        if (savedSettings.training_type) {
+            $('select[name="training_type"] option[value="' + savedSettings.training_type + '"]').prop("selected", true);
+        }
         for (element in savedSettings.strings){
             $('input[name="strings[]"][value="' + savedSettings.strings[element] + '"]').prop("checked", true);
         }
@@ -60,10 +63,10 @@ var showSettingsView = function (){
     $("#settings-view").css({'display': 'flex'});
 }
 
-var showExerciseView = function (options) {
+var showExerciseView = function (options, exercisesCollector) {
     $(".view").hide();
     StepsCounter.incrementCounter();
-    var exercise = getExercise(options);
+    var exercise = getExercise(options, exercisesCollector);
     $(".counter-text").html("Esercizio "+StepsCounter.count);
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
@@ -129,19 +132,20 @@ $(function(){
     });
 
     var initTraining = function(options){
+        var exercisesCollector = new ExercisesCollector();
         var countUpTimer = new CountUpTimer(".timer-text .seconds", ".timer-text .minutes");
         countUpTimer.start();
 
-        showExerciseView(options);
+        showExerciseView(options, exercisesCollector);
         
         var autoplayTimer;
         if (options.bpm != 0){
             var milliseconds = (60 / options.bpm) * 1000;
-            autoplayTimer = setInterval(function(){showExerciseView(options)}, milliseconds);
+            autoplayTimer = setInterval(function () { showExerciseView(options, exercisesCollector)}, milliseconds);
             $("#training-view .next-button").hide();
         } else {
             $("#training-view .next-button").show().off().click(function () {
-                showExerciseView(options);
+                showExerciseView(options, exercisesCollector);
             });
         }
 
