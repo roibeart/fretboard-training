@@ -56,12 +56,12 @@ var StepsCounter = {
 }
 
 var showSettingsView = function (){
-    $("#training-view").hide();
+    $(".view").hide();
     $("#settings-view").css({'display': 'flex'});
 }
 
 var showExerciseView = function (options) {
-    $("#settings-view").hide();
+    $(".view").hide();
     StepsCounter.incrementCounter();
     var exercise = getExercise(options);
     $(".counter-text").html("Esercizio "+StepsCounter.count);
@@ -69,11 +69,25 @@ var showExerciseView = function (options) {
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
     if (StepsCounter.count > 1){
-        $("#training-view").effect("highlight", { color: '#37cde6'}, 400);
+        $("#training-view").effect("highlight", { color: '#abdfe8'}, 400);
     }
     if (options['enable_vibration']){
         window.navigator.vibrate(200);
     }
+}
+
+var showSummaryView = function (totalTime, totalExercises) {
+    
+    function buildDefaultSummary(totalTime, totalExercises) {
+        var templateContents = $("#tpl-defaut-summary-screen").prop("content");
+        var view = $('#summary-view .summary-wrapper').html(templateContents);
+        view.find('.total-time').html(totalTime);
+        view.find('.total-exercises').html(totalExercises);
+    }
+
+    buildDefaultSummary(totalTime, totalExercises);
+    $(".view").hide();
+    $("#summary-view").css({ 'display': 'flex' });
 }
 
 var noSleep = new NoSleep();
@@ -132,12 +146,19 @@ $(function(){
         }
 
         $("#training-view .stop-button").click(function () {
+            var totalTime = $('.timer-text').text();
+            var totalExercises = StepsCounter.count;
             clearInterval(autoplayTimer);
             countUpTimer.stop();
-            showSettingsView();
             StepsCounter.resetCounter();
             noSleep.disable();
+            showSummaryView(totalTime, totalExercises);
         });
+
+        $("#summary-view .finish-button").click(function(){
+            showSettingsView();
+        });
+        
     }
 
 });

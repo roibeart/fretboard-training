@@ -70,7 +70,7 @@
                     </div>
                     <div class="buttons-wrapper">
                         <button class="start-button btn btn-primary text-uppercase">
-                            Start
+                            Inizia
                         </button>
                     </div>
                 </form>
@@ -81,9 +81,7 @@
             <div class="view-wrapper">
                 <div class="exercise-wrapper">
                     <div class="timer-text">
-                        <span class="minutes">00</span>
-                        :
-                        <span class="seconds">00</span>
+                        <span class="minutes">00</span>:<span class="seconds">00</span>
                     </div>
                     <div class="counter-text">
 
@@ -100,9 +98,34 @@
                 </div>
                 <div class="buttons-wrapper">
                     <button class="next-button btn btn-primary text-uppercase">
-                        Next
+                        Prossimo
                     </button>
-                    <a class="stop-button text-uppercase" href="#">Stop</a>
+                    <button class="stop-button btn btn-primary text-uppercase">
+                        Fine
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="view row align-items-center" id="summary-view">
+            <div class="view-wrapper">
+                <div class="summary-wrapper">
+                    <template id="tpl-defaut-summary-screen">
+                        <div class="tpl-defaut-summary-wrapper">
+                            <h2>Riepilogo</h2>
+                            <div class="stat-block">
+                                Tempo trascorso: <span class="stat-value total-time"></span>
+                            </div>
+                            <div class="stat-block">
+                                Esercizi svolti: <span class="stat-value total-exercises"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="buttons-wrapper">
+                    <button class="finish-button btn btn-primary text-uppercase">
+                        OK
+                    </button>
                 </div>
             </div>
         </div>

@@ -46,6 +46,12 @@ h2 {
     text-align: center;
 }
 
+.buttons-wrapper .btn {
+    display: block;
+    margin: auto;
+    min-width: 150px;
+}
+
 #training-view {
     font-size: 2rem;
 }
@@ -74,9 +80,29 @@ h2 {
     margin-top: 4.5rem;
 }
 
-#training-view .stop-button {
-    display: block;
-    margin-top: 2rem;
-    text-decoration: underline;
-    font-size: 1rem;
+#training-view .buttons-wrapper .stop-button {
+    margin-top: 1.5rem;
+    background-color: #eeeeee;
+    border-color: #eeeeee;
+    color: #333;
+}
+
+#summary-view .view .view-wrapper {
+    text-align: left;
+}
+
+#summary-view .tpl-defaut-summary-wrapper h2 {
+    margin-bottom: 2.5rem;
+}
+
+#summary-view .tpl-defaut-summary-wrapper .stat-block:not(:last-of-type) {
+    margin-bottom: 1rem;
+}
+
+#summary-view .tpl-defaut-summary-wrapper .stat-value {
+    font-weight: bold;
+}
+
+#summary-view .buttons-wrapper {
+    margin-top: 4.5rem;
 }
