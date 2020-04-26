@@ -68,6 +68,9 @@ var showExerciseView = function (options) {
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
+    if (StepsCounter.count > 1){
+        $("#training-view").effect("highlight", { color: '#37cde6'}, 400);
+    }
     if (options['enable_vibration']){
         window.navigator.vibrate(200);
     }

@@ -2,6 +2,7 @@ const staticFretboardTraining = "fretboard-learning-v1"
 const assets = [
     "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
     "https://code.jquery.com/jquery-3.4.1.min.js",
+    "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js",
     "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js",
     "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.6.0/NoSleep.min.js",
