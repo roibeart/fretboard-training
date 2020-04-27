@@ -1,4 +1,4 @@
-const staticFretboardTraining = "fretboard-learning-v1.1"
+const currentVersion = "fretboard-learning-v1.1"
 const assets = [
     "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
     "https://code.jquery.com/jquery-3.4.1.min.js",
@@ -16,11 +16,28 @@ const assets = [
 
 self.addEventListener("install", installEvent => {
     installEvent.waitUntil(
-        caches.open(staticFretboardTraining).then(cache => {
+        caches.open(currentVersion).then(cache => {
             cache.addAll(assets)
         })
     )
 })
+
+// https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#updates
+self.addEventListener('activate', event => {
+    // delete the old cache
+    event.waitUntil(
+        caches.keys().then(keys => Promise.all(
+            keys.map(key => {
+                if (key != currentVersion) {
+                    return caches.delete(key);
+                }
+            })
+        )).then(() => {
+            //console.log('new version now ready to handle fetches!');
+        })
+    );
+});
+
 
 self.addEventListener("fetch", fetchEvent => {
     fetchEvent.respondWith(
