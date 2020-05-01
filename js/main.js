@@ -50,11 +50,16 @@ var getFormData = function($form) {
 
 var StepsCounter = {
     count: 0,
+    completedSteps: 0,
     incrementCounter: function(){
         this.count++;
     },
+    incrementCompletedSteps: function(){
+        this.completedSteps++;
+    },
     resetCounter: function(){
         this.count = 0;
+        this.completedSteps = 0;
     }
 }
 
@@ -65,17 +70,25 @@ var showSettingsView = function (){
 
 var showExerciseView = function (options, exercisesCollector) {
     $(".view").hide();
-    StepsCounter.incrementCounter();
     var exercise = getExercise(options, exercisesCollector);
+    var highlightColor = '#cedddf';
+    var vibrationLength = 100;
+    if (exercise.isNewRound){
+        StepsCounter.incrementCounter();
+        highlightColor = '#abdfe8';
+        vibrationLength = 200;
+    }
+    if (exercise.isLastOfRound){
+        // Per convenzione, considera un esercizio completato quando si arriva all'ultimo round
+        StepsCounter.incrementCompletedSteps();
+    }
     $(".counter-text").html("Esercizio "+StepsCounter.count);
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
-    if (StepsCounter.count > 1){
-        $("#training-view").effect("highlight", { color: '#abdfe8'}, 400);
-    }
+    $("#training-view").effect("highlight", { color: highlightColor}, 400);
     if (options['enable_vibration']){
-        window.navigator.vibrate(200);
+        window.navigator.vibrate(vibrationLength);
     }
 }
 
@@ -151,7 +164,7 @@ $(function(){
 
         $("#training-view .stop-button").off().click(function () {
             var totalTime = $('.timer-text').text();
-            var totalExercises = StepsCounter.count;
+            var totalExercises = StepsCounter.completedSteps;
             clearInterval(autoplayTimer);
             countUpTimer.stop();
             StepsCounter.resetCounter();

@@ -47,7 +47,9 @@ var getNewRandomNote = function(options){
 
     return {
         note: note,
-        string: string
+        string: string,
+        isNewRound: true,
+        isLastOfRound: true // di default la nota è la prima e l'ultima dell'esercizio (poi cambia a seconda della tipologia di esercizio)
     }
 }
 
@@ -56,7 +58,6 @@ var getExercise = function(options, exercisesCollector){
     switch (options.training_type){
         case 'note_on_all_strings':
             var lastExercise = exercisesCollector.getLastExercise();
-            console.log(lastExercise);
             var strings = options.strings.sort();
             strings.reverse(); // inverti l'array per partire dalla corda 6
             // Scorri tutte le corde fin quando non trovi la posizione di quella dell'ultimo esercizio
@@ -68,15 +69,18 @@ var getExercise = function(options, exercisesCollector){
             // Se è il primo esercizio o
             // se per questa nota sono state già considerate tutte le corde selezionate,
             // allora genera una nuova nota, ripartendo dalla corda più alta
-            if (lastExercise == null || i == strings.length -1)
+            if (lastExercise == null || i == strings.length - 1)
             {
                 exercise = getNewRandomNote(options);
                 exercise.string = strings[0];
+                exercise.isLastOfRound = false;
             } else {
                 // Altrimenti procedi con la stessa nota per la corda successiva
                 exercise = {
                     note: lastExercise.note,
-                    string: options.strings[i+1]
+                    string: options.strings[i+1],
+                    isNewRound: false,
+                    isLastOfRound: (i+1 == strings.length - 1)
                 }
             }
             break;
