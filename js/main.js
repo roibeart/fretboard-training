@@ -68,6 +68,7 @@ var showSettingsView = function (){
     $("#settings-view").css({'display': 'flex'});
 }
 
+var canHighlight = true;
 var showExerciseView = function (options, exercisesCollector) {
     $(".view").hide();
     var exercise = getExercise(options, exercisesCollector);
@@ -86,7 +87,10 @@ var showExerciseView = function (options, exercisesCollector) {
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
-    $("#training-view").effect("highlight", { color: highlightColor}, 400);
+    if (canHighlight){
+        canHighlight = false;
+        $("#training-view").effect("highlight", { color: highlightColor}, 400, function(){ canHighlight = true; });
+    }
     if (options['enable_vibration']){
         window.navigator.vibrate(vibrationLength);
     }
