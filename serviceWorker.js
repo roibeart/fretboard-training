@@ -1,4 +1,4 @@
-const currentVersion = "fretboard-learning-v1.2"
+const currentVersion = "fretboard-learning-v1.21"
 const assets = [
     "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
     "https://code.jquery.com/jquery-3.4.1.min.js",
