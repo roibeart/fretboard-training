@@ -3,16 +3,28 @@ var getRandomElement = function(array){
     return array[Math.floor(Math.random() * array.length)];
 };
 
-var getNewRandomNote = function(options){
-    var note = getRandomElement(notes);
-    note.accidental = (options.accidentals_included) ? getRandomElement(["", "♯", "♭"]) : "";
-    if (
-        (note.accidental == "♯" && (note.latin == "Si" || note.latin == "Mi"))
-        || (note.accidental == "♭" && (note.latin == "Do" || note.latin == "Fa"))
-    ) {
-        note.accidental = "";
+var getNewRandomNote = function(options, excludedNote){
+    var note;
+    var string;
+    while (
+        // Evita di mostrare la nota excludedNote
+        (excludedNote && (!note || (excludedNote.note.english == note.english && excludedNote.note.accidental === note.accidental)) && (!string || excludedNote.string == string))
+        // Evita di mostrare la nota excludedNote (nel caso non sia definita la corda)
+        || (excludedNote && !excludedNote.string && (!note || (excludedNote.note.english == note.english && excludedNote.note.accidental === note.accidental)))
+        // Caso in cui excludedNote non è definito
+        || (!excludedNote && !note && !string)
+    )
+    {
+        note = getRandomElement(notes);
+        note.accidental = (options.accidentals_included) ? getRandomElement(["", "♯", "♭"]) : "";
+        if (
+            (note.accidental == "♯" && (note.latin == "Si" || note.latin == "Mi"))
+            || (note.accidental == "♭" && (note.latin == "Do" || note.latin == "Fa"))
+        ) {
+            note.accidental = "";
+        }
+        string = getRandomElement(options.strings);
     }
-    var string = getRandomElement(options.strings);
 
     return {
         note: note,
@@ -24,9 +36,10 @@ var getNewRandomNote = function(options){
 
 var getExercise = function(options, exercisesCollector){
     var exercise = null;
+    var lastExercise = exercisesCollector.getLastExercise();
+
     switch (options.training_type){
         case 'note_on_all_strings':
-            var lastExercise = exercisesCollector.getLastExercise();
             var strings = options.strings.sort();
             strings.reverse(); // inverti l'array per partire dalla corda 6
             // Scorri tutte le corde fin quando non trovi la posizione di quella dell'ultimo esercizio
@@ -40,7 +53,10 @@ var getExercise = function(options, exercisesCollector){
             // allora genera una nuova nota, ripartendo dalla corda più alta
             if (lastExercise == null || i == strings.length - 1)
             {
-                exercise = getNewRandomNote(options);
+                if (lastExercise){
+                    lastExercise.string = null; // corda impostata a null, per fare in modo che getNewRandomNote non ritorni una nota uguale alla precedente
+                }
+                exercise = getNewRandomNote(options, lastExercise);
                 exercise.string = strings[0];
                 exercise.isLastOfRound = false;
             } else {
@@ -55,7 +71,7 @@ var getExercise = function(options, exercisesCollector){
             break;
         case 'note_on_single_string':
         default:
-            exercise = getNewRandomNote(options);
+            exercise = getNewRandomNote(options, lastExercise);
     }
 
     exercisesCollector.addExercise(exercise);
@@ -73,7 +89,8 @@ class ExercisesCollector {
     getLastExercise(){
         var result = null;
         if (this.exercises.length > 0){
-            result = this.exercises[this.exercises.length - 1];
+            // clona l'oggetto
+            result = jQuery.extend(true, {}, this.exercises[this.exercises.length - 1]);
         }
         return result;
     }
@@ -130,8 +147,6 @@ var loadSavedSettings = function(){
 
 // https://github.com/0xfe/vexflow/issues/616
 var showNoteFigure = function(selector, exercise, clef){
-
-    console.log(exercise.string + "-" + exercise.note.english);
     var note = noteFiguresMap[exercise.string + "-" + exercise.note.english].vexflow_note;
 
     if (!clef){
