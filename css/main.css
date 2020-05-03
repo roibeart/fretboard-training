@@ -63,16 +63,16 @@ h2 {
 
 #training-view .counter-text {
     font-size: 1.5rem;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
 }
 
 #training-view .note-text, #training-view .string-text {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: bold;
 }
 
 #training-view .between-text {
-    padding: 20px 0;
+    padding: 0.2rem 0;
     font-size: 2.5rem;
 }
 

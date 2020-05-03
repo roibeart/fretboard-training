@@ -80,10 +80,11 @@ var showExerciseView = function (options, exercisesCollector) {
         vibrationLength = 200;
     }
     if (exercise.isLastOfRound){
-        // Per convenzione, considera un esercizio completato quando si arriva all'ultimo round
+        // Per convenzione, considera un esercizio completato quando si arriva all'ultimo del round
         StepsCounter.incrementCompletedSteps();
     }
     $(".counter-text").html("Esercizio "+StepsCounter.count);
+    showNoteFigure("#note-figure", exercise);
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});

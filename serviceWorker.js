@@ -6,9 +6,11 @@ const assets = [
     "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js",
     "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/nosleep/0.6.0/NoSleep.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/vexflow/3.0.9/vexflow-min.js",
     "/",
     "/index.html",
     "/css/main.css",
+    "/js/constants.js",
     "/js/functions.js",
     "/js/main.js",
     "/images/icon.png"

@@ -1,34 +1,3 @@
-const notes = [
-    {
-        latin: "Do",
-        english: "C"
-    },
-    {
-        latin: "Re",
-        english: "D"
-    },
-    {
-        latin: "Mi",
-        english: "E"
-    },
-    {
-        latin: "Fa",
-        english: "F"
-    },
-    {
-        latin: "Sol",
-        english: "G"
-    },
-    {
-        latin: "La",
-        english: "A"
-    },
-    {
-        latin: "Si",
-        english: "B"
-    },
-]
-
 // https://stackoverflow.com/a/4550514
 var getRandomElement = function(array){
     return array[Math.floor(Math.random() * array.length)];
@@ -157,4 +126,47 @@ var loadSavedSettings = function(){
     }
 
     return savedSettings;
+}
+
+// https://github.com/0xfe/vexflow/issues/616
+var showNoteFigure = function(selector, exercise, clef){
+
+    console.log(exercise.string + "-" + exercise.note.english);
+    var note = noteFiguresMap[exercise.string + "-" + exercise.note.english].vexflow_note;
+
+    if (!clef){
+        clef = "treble";
+    }
+
+    var accidental = exercise.note.accidental;
+    if (accidental){
+        if (accidental == "♭"){
+            accidental = "b";
+        } else if (accidental == "♯"){
+            accidental = "#";
+        }
+    }
+
+    var div = $(selector).html('')[0];
+
+    VF = Vex.Flow;
+    var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+    renderer.resize(120, 150);
+    var context = renderer.getContext();
+    var stave = new VF.Stave(10, 10, 100);
+    stave.addClef(clef);
+    stave.setContext(context).draw();
+    // new Vex.Flow.StaveNote({ clef: clef, keys: ["d/3"], duration: "q" })
+    var staveNote = new VF.StaveNote({ clef: clef, keys: [note], duration: "q", auto_stem: true });
+    if (accidental){
+        staveNote.addAccidental(0, new VF.Accidental(accidental));
+    }
+    var notes = [
+        staveNote
+    ];
+
+    var voice = new VF.Voice({ num_beats: 1, beat_value: 4 });
+    voice.addTickables(notes);
+    var formatter = new VF.Formatter().joinVoices([voice]).format([voice], 50);
+    voice.draw(context, stave);
 }
