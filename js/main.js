@@ -50,6 +50,7 @@ var getFormData = function($form) {
 
 var StepsCounter = {
     count: 0,
+    notesCount: 0,
     completedSteps: 0,
     incrementCounter: function(){
         this.count++;
@@ -57,8 +58,12 @@ var StepsCounter = {
     incrementCompletedSteps: function(){
         this.completedSteps++;
     },
+    incrementNotesCount: function(){
+        this.notesCount++;
+    },
     resetCounter: function(){
         this.count = 0;
+        this.notesCount = 0;
         this.completedSteps = 0;
     }
 }
@@ -74,6 +79,7 @@ var showExerciseView = function (options, exercisesCollector) {
     var exercise = getExercise(options, exercisesCollector);
     var highlightColor = '#cedddf';
     var vibrationLength = 100;
+    StepsCounter.incrementNotesCount();
     if (exercise.isNewRound){
         StepsCounter.incrementCounter();
         highlightColor = '#abdfe8';
@@ -97,16 +103,14 @@ var showExerciseView = function (options, exercisesCollector) {
     }
 }
 
-var showSummaryView = function (totalTime, totalExercises) {
-    
-    function buildDefaultSummary(totalTime, totalExercises) {
-        var templateContents = $("#tpl-defaut-summary-screen").prop("content");
-        var view = $('#summary-view .summary-wrapper').html(templateContents);
-        view.find('.total-time').html(totalTime);
-        view.find('.total-exercises').html(totalExercises);
-    }
-
-    buildDefaultSummary(totalTime, totalExercises);
+var showSummaryView = function (stats) {
+    $('#summary-view .stats-wrapper').html('');
+    $.each(stats, function(index, element){
+        var tplBlock = $($("#tpl-stat-block").prop("content")).find(".tpl-stat-block-wrapper");
+        tplBlock.find('.stat-name').html(element.name);
+        tplBlock.find('.stat-value').html(element.value);
+        $('#summary-view .stats-wrapper').append(tplBlock.html());
+    });
     $(".view").hide();
     $("#summary-view").css({ 'display': 'flex' });
 }
@@ -130,7 +134,7 @@ $(function(){
             $('#enable_vibration-check').prop("disabled", false);
             var seconds = (60 / $(this).val());
             // https://stackoverflow.com/a/11832950
-            seconds = Math.round((seconds + Number.EPSILON) * 100) / 100;
+            seconds = getRoundedNumber(seconds);
             var secondsString = (seconds == 1) ? "secondo" : seconds + " secondi";
             label = $(this).val() +" bpm <span class='note'>una nota ogni " + secondsString + "</span>";
         }
@@ -169,12 +173,32 @@ $(function(){
 
         $("#training-view .stop-button").off().click(function () {
             var totalTime = $('.timer-text').text();
+            var totalSeconds = countUpTimer.getTotalSeconds();
             var totalExercises = StepsCounter.completedSteps;
+            var totalNotes = StepsCounter.notesCount;
             clearInterval(autoplayTimer);
             countUpTimer.stop();
             StepsCounter.resetCounter();
             noSleep.disable();
-            showSummaryView(totalTime, totalExercises);
+            var stats = [
+                {
+                    name: "Tempo trascorso",
+                    value: totalTime
+                },
+                {
+                    name: "Esercizi svolti",
+                    value: totalExercises
+                }
+            ]
+            // Se non c'è autoplay, aggiungi statistica "media secondi per nota"
+            if (options.bpm == 0){
+                var averageSecondsPerNote = getRoundedNumber(totalSeconds / totalNotes);
+                stats.push({
+                    name: "Media secondi per nota",
+                    value: averageSecondsPerNote
+                });
+            }
+            showSummaryView(stats);
         });
 
         $("#summary-view .finish-button").off().click(function(){

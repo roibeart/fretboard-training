@@ -120,14 +120,13 @@
         <div class="view row align-items-center" id="summary-view">
             <div class="view-wrapper">
                 <div class="summary-wrapper">
-                    <template id="tpl-defaut-summary-screen">
-                        <div class="tpl-defaut-summary-wrapper">
-                            <h2>Riepilogo</h2>
+                    <h2>Riepilogo</h2>
+                    <div class="stats-wrapper">
+                    </div>
+                    <template id="tpl-stat-block">
+                        <div class="tpl-stat-block-wrapper">
                             <div class="stat-block">
-                                Tempo trascorso: <span class="stat-value total-time"></span>
-                            </div>
-                            <div class="stat-block">
-                                Esercizi svolti: <span class="stat-value total-exercises"></span>
+                                <span class="stat-name"></span>: <span class="stat-value"></span>
                             </div>
                         </div>
                     </template>

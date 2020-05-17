@@ -125,11 +125,19 @@ class CountUpTimer {
         };
         this.timer = setInterval(function () { totalSeconds = updateTime(totalSeconds, secondsLabel, minutesLabel); }, 1000);
     }
+    getTotalSeconds(){
+        return parseInt(this.secondsLabel.text()) + (parseInt(this.minutesLabel.text()) * 60);
+    }
     stop() {
         clearInterval(this.timer);
         this.secondsLabel.html("00");
         this.minutesLabel.html("00");
     }
+};
+
+var getRoundedNumber = function(number){
+    // https://stackoverflow.com/a/11832950
+    return Math.round((number + Number.EPSILON) * 100) / 100;
 };
 
 var saveSettings = function(settings){
