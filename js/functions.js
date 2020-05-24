@@ -58,7 +58,7 @@ var getExercise = function(options, exercisesCollector){
                 }
                 exercise = getNewRandomNote(options, lastExercise);
                 exercise.string = strings[0];
-                exercise.isLastOfRound = false;
+                exercise.isLastOfRound = (strings.length == 1); // È ultimo round solo se per la sessione è stata impostata una sola corda
             } else {
                 // Altrimenti procedi con la stessa nota per la corda successiva
                 exercise = {
