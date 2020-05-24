@@ -186,10 +186,16 @@ $(function(){
                     value: totalTime
                 },
                 {
-                    name: "Esercizi svolti",
+                    name: "Esercizi completati",
                     value: totalExercises
                 }
             ]
+            if (options.training_type == 'note_on_all_strings') {
+                stats.push({
+                    name: "Totale note mostrate",
+                    value: totalNotes
+                });
+            }
             // Se non c'è autoplay, aggiungi statistica "media secondi per nota"
             if (options.bpm == 0){
                 var averageSecondsPerNote = getRoundedNumber(totalSeconds / totalNotes);
