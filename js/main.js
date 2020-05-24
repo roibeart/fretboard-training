@@ -83,7 +83,7 @@ var showExerciseView = function (options, exercisesCollector) {
     if (exercise.isNewRound){
         StepsCounter.incrementCounter();
         highlightColor = '#abdfe8';
-        vibrationLength = 200;
+        vibrationLength = 300;
     }
     if (exercise.isLastOfRound){
         // Per convenzione, considera un esercizio completato quando si arriva all'ultimo del round
