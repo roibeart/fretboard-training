@@ -16,19 +16,22 @@ var getNewRandomNote = function(options, excludedNote){
     )
     {
         note = getRandomElement(notes);
-        note.accidental = (options.accidentals_included) ? getRandomElement(["", "♯", "♭"]) : "";
+        note.accidental = (options.accidentals_included) ? getRandomElement(["", "#", "b"]) : "";
         if (
-            (note.accidental == "♯" && (note.latin == "Si" || note.latin == "Mi"))
-            || (note.accidental == "♭" && (note.latin == "Do" || note.latin == "Fa"))
+            (note.accidental == "#" && (note.latin == "Si" || note.latin == "Mi"))
+            || (note.accidental == "b" && (note.latin == "Do" || note.latin == "Fa"))
         ) {
             note.accidental = "";
         }
         string = getRandomElement(options.strings);
     }
 
+    noteDetails = noteFiguresMap[string + "-" + note.english + note.accidental];
+
     return {
         note: note,
         string: string,
+        midiNumber: noteDetails.midi_number,
         isNewRound: true,
         isLastOfRound: true // di default la nota è la prima e l'ultima dell'esercizio (poi cambia a seconda della tipologia di esercizio)
     }
