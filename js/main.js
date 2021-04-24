@@ -96,16 +96,14 @@ var showExerciseView = function (options, exercisesCollector) {
 
     if (options.enable_mic){
         var isNoteAlreadyGuessed = false;
-        // Se la nota è indovinata, segnalalo in verde nella view
+        // Se la nota è indovinata e c'è l'autoplay, segnalalo in verde nella view
         var soundEventHandler = function(e){
-            if (!isNoteAlreadyGuessed){
+            if (options.bpm != 0 && !isNoteAlreadyGuessed){
                 if (isRightNotePlayed(e, exercisesCollector)) {
                     isNoteAlreadyGuessed = true;
                     canHighlight = false;
                     $("#training-view").effect("highlight", { color: "#2db758" }, 400, function () { canHighlight = true; });
-                    if (options.bpm != 0) {
-                        // TODO segnare in exerciseCollector le note indovinate
-                    }
+                    // TODO segnare in exerciseCollector le note indovinate
                 }
             }
         }
@@ -122,7 +120,7 @@ var showExerciseView = function (options, exercisesCollector) {
     $(".note-text").html(exercise.note.latin + exercise.note.accidental + " | " + exercise.note.english + exercise.note.accidental);
     $(".string-text").html("corda " + exercise.string);
     $("#training-view").css({'display': 'flex'});
-    if (canHighlight && options.bpm != 0){
+    if (canHighlight){
         canHighlight = false;
         $("#training-view").effect("highlight", { color: highlightColor}, 400, function(){ canHighlight = true; });
     }
